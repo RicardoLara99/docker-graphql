@@ -18,6 +18,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+        
     - name: Docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -26,5 +27,13 @@ jobs:
         echo "Iniciando login . . ."
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Finalizando login . . ."
+    
+    - name: Docker BUILD image
+      run: |
+        docker build -t ricardolara99/docker-graphql:0.0.1 .
+    
+    - name: Docker PUSH image
+      run: |
+        docker push ricardolara99/docker-graphql:0.0.1 .
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
